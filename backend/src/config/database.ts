@@ -14,3 +14,4 @@ module.exports = {
   password: process.env.DB_PASS,
   logging: false
 };
+
