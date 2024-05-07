@@ -9,10 +9,10 @@ let io: SocketIO;
 
 export const initIO = (httpServer: Server): SocketIO => {
   io = new SocketIO(httpServer, {
-    //cors: {
-    //  origin: '*',
-    //  methods: ["GET", "POST", "PUT", "DELETE"]
-    //}
+    cors: {
+     origin: 'https://whaticket-back.vercel.app',
+     methods: ["GET", "POST", "PUT", "DELETE"]
+    }
   });
 
   io.on("connection", socket => {
