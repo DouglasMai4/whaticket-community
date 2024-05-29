@@ -45,28 +45,20 @@ export const initWbot = async (whatsapp: Whatsapp): Promise<Session> => {
 
       const args:String = process.env.CHROME_ARGS || "";
 
+      const wwebVersion = '2.2412.54';
       const wbot: Session = new Client({
         session: sessionCfg,
-        webVersion: "2.2412.54v2",
+        authStrategy: new LocalAuth({clientId: 'bd_'+whatsapp.id}),
         puppeteer: {
-          browserWSEndpoint: `${process.env.CHROME_WS}${lauchOptions}` || undefined,
-          args: [
-            "--no-sandbox",
-            "--disable-setuid-sandbox",
-            "--disable-gpu-driver-bug-workarounds",
-            "--disable-accelerated-2d-canvas",
-            "--disable-background-timer-throttling",
-            "--disable-backgrounding-occluded-windows",
-            --user-data-dir=`${userDataDir}` // Specify the dynamic user data directory here
-          ],
-          headless: true,
-          userDataDir: process.env.CHROME_WS ? userDataDir : undefined
+          executablePath: process.env.CHROME_BIN || undefined,
+          // @ts-ignore
+          browserWSEndpoint: process.env.CHROME_WS || undefined,
+          args: args.split(' ')
         },
-        sessionName,
         webVersionCache: {
-          type: "remote",
-          remotePath: `https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/${wwebVersion}.html`
-        }
+          type: 'remote',
+          remotePath: `https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/${wwebVersion}.html`,
+        },
       });
 
       wbot.initialize();
