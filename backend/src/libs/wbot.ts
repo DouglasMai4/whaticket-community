@@ -49,7 +49,7 @@ export const initWbot = async (whatsapp: Whatsapp): Promise<Session> => {
         session: sessionCfg,
         webVersion: "2.2412.54v2",
         puppeteer: {
-          browserWSEndpoint: ${process.env.CHROME_WS}${lauchOptions} || undefined,
+          browserWSEndpoint: `${process.env.CHROME_WS}${lauchOptions}` || undefined,
           args: [
             "--no-sandbox",
             "--disable-setuid-sandbox",
@@ -57,7 +57,7 @@ export const initWbot = async (whatsapp: Whatsapp): Promise<Session> => {
             "--disable-accelerated-2d-canvas",
             "--disable-background-timer-throttling",
             "--disable-backgrounding-occluded-windows",
-            --user-data-dir=${userDataDir} // Specify the dynamic user data directory here
+            --user-data-dir=`${userDataDir}` // Specify the dynamic user data directory here
           ],
           headless: true,
           userDataDir: process.env.CHROME_WS ? userDataDir : undefined
